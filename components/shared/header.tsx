@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { User, ShoppingCart, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
@@ -12,26 +13,44 @@ interface Props {
 const Header: React.FC<Props> = ({ className }) => {
   return (
     <header className={cn('border-b flex items-center justify-between py-8', className)}>
-      <div className='flex items-center gap-4'>
-        <Image src='/logo.png' alt='logo' width={35} height={35} />
-        <div className='flex-col'>
-          <h1 className='text-2xl uppercase font-bold'>Next Pizza</h1>
-          <p className='text-sm text-gray-400 leading-3'>вкусней уже некуда</p>
+      <Link href="/">
+        <div className="flex items-center gap-4">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={35}
+            height={35}
+          />
+          <div className="flex-col">
+            <h1 className="text-2xl uppercase font-extrabold">Next Pizza</h1>
+            <p className="text-sm text-gray-400 leading-3">вкусней уже некуда</p>
+          </div>
         </div>
-      </div>
-      <div className='flex gap-2'>
-        <Button variant='outline' className='flex items-center gap-1'>
-          <User size={16}/>
+      </Link>
+      <input></input>
+      <div className="flex gap-2">
+        <Button
+          variant="outline"
+          className="flex items-center gap-1"
+        >
+          <User size={16} />
           Войти
         </Button>
-        <Button className='group relative'>
+        <Button className="group relative">
           <b>520 ₽</b>
-          <span className='h-full w-[1px] bg-white/30 mx-3' />
-          <div className='flex items-center gap-1 transition duration-300 group-hover:opacity-0'>
-            <ShoppingCart size={16} className='relative' strokeWidth={2} />
+          <span className="h-full w-[1px] bg-white/30 mx-3" />
+          <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
+            <ShoppingCart
+              size={16}
+              className="relative"
+              strokeWidth={2}
+            />
             <b>3</b>
           </div>
-          <ArrowRight size={20} className='absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0' />
+          <ArrowRight
+            size={20}
+            className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
+          />
         </Button>
       </div>
     </header>

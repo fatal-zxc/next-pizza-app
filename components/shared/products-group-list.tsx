@@ -15,17 +15,11 @@ interface Props {
   categoryId: number
 }
 
-const ProductsGroupList: React.FC<Props> = ({
-  title,
-  products,
-  className,
-  listClassName,
-  categoryId,
-}) => {
+const ProductsGroupList: React.FC<Props> = ({ title, products, className, listClassName, categoryId }) => {
   const setActiveCategotyId = useCategoryStore((state) => state.setActiveId)
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
-    threshold: 0.4
+    threshold: 0.4,
   })
 
   useEffect(() => {
@@ -35,8 +29,16 @@ const ProductsGroupList: React.FC<Props> = ({
   }, [setActiveCategotyId, categoryId, intersection?.isIntersecting])
 
   return (
-    <div className={cn('', className)} id={title} ref={intersectionRef} >
-      <Title text={title} size='lg' className='font-extrabold mb-5' />
+    <div
+      className={cn('', className)}
+      id={title}
+      ref={intersectionRef}
+    >
+      <Title
+        text={title}
+        size="lg"
+        className="font-extrabold mb-5"
+      />
       <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
         {products.map((product, i) => (
           <ProductCard

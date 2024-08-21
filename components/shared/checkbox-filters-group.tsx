@@ -27,7 +27,7 @@ const CheckboxFiltersGroup: React.FC<Props> = ({
   searchInputPlaceholder = 'Поиск...',
   className,
   onChange,
-  defaultValue
+  defaultValue,
 }) => {
   const [showAll, setShowAll] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -36,13 +36,21 @@ const CheckboxFiltersGroup: React.FC<Props> = ({
     setSearchValue(value)
   }
 
-  const renderItems = showAll ? items.filter(item => item.text.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase()) : defaultItems.slice(0, limit)
+  const renderItems = showAll
+    ? items.filter((item) => item.text.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase())
+    : defaultItems.slice(0, limit)
 
   return (
     <div className={cn('', className)}>
-      <b className='mb-3'>{title}</b>
-      {showAll && <Input onChange={e => handleSearchInput(e.target.value)} placeholder={searchInputPlaceholder} className='bg-gray-50 border-none mt-3' />}
-      <div className='flex flex-col gap-4 max-h-96 pr-2 mt-5 overflow-auto scrollbar'>
+      <b className="mb-3">{title}</b>
+      {showAll && (
+        <Input
+          onChange={(e) => handleSearchInput(e.target.value)}
+          placeholder={searchInputPlaceholder}
+          className="bg-gray-50 border-none mt-3"
+        />
+      )}
+      <div className="flex flex-col gap-4 max-h-96 pr-2 mt-5 overflow-auto scrollbar">
         {renderItems.map((item, i) => (
           <FilterCheckbox
             onCheckedChange={(ids) => console.log(ids)}
@@ -55,7 +63,10 @@ const CheckboxFiltersGroup: React.FC<Props> = ({
         ))}
       </div>
       {items.length > limit && (
-        <button onClick={() => setShowAll(!showAll)} className='text-primary mt-3'>
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="text-primary mt-3"
+        >
           {showAll ? 'Скрыть' : 'Показать все'}
         </button>
       )}

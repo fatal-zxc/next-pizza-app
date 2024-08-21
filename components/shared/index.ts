@@ -8,5 +8,18 @@ import Filters from './filters'
 import CheckboxFiltersGroup from './checkbox-filters-group'
 import ProductCard from './product-card'
 import ProductsGroupList from './products-group-list'
+import SearchInput from './search-input'
 
-export {Header, Title, Categories, SortPopup, TopBar, FilterCheckbox, Filters, CheckboxFiltersGroup, ProductCard, ProductsGroupList}
+export {
+  Header,
+  Title,
+  Categories,
+  SortPopup,
+  TopBar,
+  FilterCheckbox,
+  Filters,
+  CheckboxFiltersGroup,
+  ProductCard,
+  ProductsGroupList,
+  SearchInput,
+}
