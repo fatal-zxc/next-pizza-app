@@ -37,7 +37,7 @@ const CheckboxFiltersGroup: React.FC<Props> = ({
   }
 
   const renderItems = showAll
-    ? items.filter((item) => item.text.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase())
+    ? items.filter((item) => item.name.includes(searchValue))
     : defaultItems.slice(0, limit)
 
   return (
@@ -56,8 +56,8 @@ const CheckboxFiltersGroup: React.FC<Props> = ({
             onCheckedChange={(ids) => console.log(ids)}
             checked={false}
             key={i}
-            value={item.value}
-            text={item.text}
+            id={item.id}
+            name={item.name}
             endAdornment={item.endAdornment}
           />
         ))}

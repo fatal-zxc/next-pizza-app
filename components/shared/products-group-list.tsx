@@ -30,7 +30,7 @@ const ProductsGroupList: React.FC<Props> = ({ title, products, className, listCl
 
   return (
     <div
-      className={cn('', className)}
+      className={cn('w-[955px]', className)}
       id={title}
       ref={intersectionRef}
     >

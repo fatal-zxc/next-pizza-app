@@ -70,6 +70,56 @@ async function generate() {
         price: 79,
         imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A39D824A82E11E9AFA61B9A8D61'
       },
+      {
+        name: 'Пикантная пепперони',
+        price: 79,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A22FA54A81411E9AFA6258199C3'
+      },
+      {
+        name: 'Острая чоризо',
+        price: 79,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A22FA54A81411E9AFA62D5D6027'
+      },
+      {
+        name: 'Маринованные огурчики',
+        price: 59,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A21DA51A81211E9EA89958D782B'
+      },
+      {
+        name: 'Свежие томаты',
+        price: 59,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A39D824A82E11E9AFA7AC1A1D67'
+      },
+      {
+        name: 'Красный лук',
+        price: 59,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A22FA54A81411E9AFA60AE6464C'
+      },
+      {
+        name: 'Итальянские травы',
+        price: 39,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/370dac9ed21e4bffaf9bc2618d258734.png'
+      },
+      {
+        name: 'Сладкий перец',
+        price: 59,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A22FA54A81411E9AFA63F774C1B'
+      },
+      {
+        name: 'Кубики брынзы',
+        price: 79,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A39D824A82E11E9AFA6B0FFC349'
+      },
+      {
+        name: 'Митболы',
+        price: 79,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/b2f3a5d5afe44516a93cfc0d2ee60088.png'
+      },
+      {
+        name: 'Баварские колбаски',
+        price: 129,
+        imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/11ee9d3660793feda24a236677d3013e.png'
+      },
     ]
   })
   await prisma.product.createMany({

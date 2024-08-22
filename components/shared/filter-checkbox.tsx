@@ -2,16 +2,16 @@ import React, { ButtonHTMLAttributes } from 'react'
 import { Checkbox } from '../ui/checkbox'
 
 export interface FilterChecboxProps {
-  text: string
-  value: string
+  name: string
+  id: number
   endAdornment?: React.ReactNode
   onCheckedChange?: (checked: boolean) => void
   checked?: boolean
 }
 
 export const FilterCheckbox: React.FC<FilterChecboxProps> = ({
-  text,
-  value,
+  name,
+  id,
   endAdornment,
   onCheckedChange,
   checked,
@@ -21,15 +21,15 @@ export const FilterCheckbox: React.FC<FilterChecboxProps> = ({
       <Checkbox
         onCheckedChange={onCheckedChange}
         checked={checked}
-        value={value}
+        value={id}
         className="rounded-[8px] w-6 h-6"
-        id={`checkbox-${String(value)}`}
+        id={`checkbox-${String(id)}`}
       />
       <label
-        htmlFor={`checkbox-${String(value)}`}
+        htmlFor={`checkbox-${String(id)}`}
         className="leading-none cursor-pointer flex-1"
       >
-        {text}
+        {name}
       </label>
       {endAdornment}
     </div>

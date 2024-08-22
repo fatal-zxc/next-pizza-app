@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
+import { SearchInput } from './index'
 
 interface Props {
   className?: string
@@ -27,7 +28,7 @@ const Header: React.FC<Props> = ({ className }) => {
           </div>
         </div>
       </Link>
-      <input></input>
+      <SearchInput className="mx-10 flex-1" />
       <div className="flex gap-2">
         <Button
           variant="outline"

@@ -34,7 +34,7 @@ const ProductCard: React.FC<Props> = ({ id, name, price, imageUrl, className }) 
         <p className="text-sm text-gray-400">
           Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус альфредо, чеснок
         </p>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <span className="text-[20px]">
             от <b>{price} ₽</b>
           </span>

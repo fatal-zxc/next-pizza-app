@@ -3,9 +3,9 @@ import { Title, TopBar, Filters, ProductsGroupList } from "@/components/shared"
 export default function Home() {
   return (
   <main className="mt-10">
-    <Title text="Все пиццы" size="lg" className="font-extrabold px-[10%]" />
+    <Title text="Все пиццы" size="lg" className="font-extrabold px-[5%]" />
     <TopBar />
-    <div className="flex gap-[80px] pb-14 px-[10%] mt-10">
+    <div className="flex gap-[50px] pb-14 px-[5%] mt-10">
       <Filters />
       <div className="flex-1">
         <div className="flex flex-col gap-16">
