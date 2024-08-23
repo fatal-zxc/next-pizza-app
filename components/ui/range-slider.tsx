@@ -9,6 +9,7 @@ type SliderProps = {
   className?: string
   min: number
   max: number
+  minStepsBetweenThumbs: number
   step: number
   formatLabel?: (value: number) => string
   value?: number[] | readonly number[]
@@ -16,7 +17,10 @@ type SliderProps = {
 }
 
 const RangeSlider = React.forwardRef(
-  ({ className, min, max, step, formatLabel, value, onValueChange, ...props }: SliderProps, ref) => {
+  (
+    { className, min, max, minStepsBetweenThumbs, step, formatLabel, value, onValueChange, ...props }: SliderProps,
+    ref
+  ) => {
     const initialValue = Array.isArray(value) ? value : [min, max]
     const [localValues, setLocalValues] = React.useState(initialValue)
 
@@ -37,6 +41,7 @@ const RangeSlider = React.forwardRef(
         ref={ref as React.RefObject<HTMLDivElement>}
         min={min}
         max={max}
+        minStepsBetweenThumbs={minStepsBetweenThumbs}
         step={step}
         value={localValues}
         onValueChange={handleValueChange}

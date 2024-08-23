@@ -9,13 +9,7 @@ export interface FilterChecboxProps {
   checked?: boolean
 }
 
-export const FilterCheckbox: React.FC<FilterChecboxProps> = ({
-  name,
-  id,
-  endAdornment,
-  onCheckedChange,
-  checked,
-}) => {
+export const FilterCheckbox: React.FC<FilterChecboxProps> = ({ name, id, endAdornment, onCheckedChange, checked }) => {
   return (
     <div className="flex items-center space-x-2">
       <Checkbox

@@ -1,6 +1,14 @@
 import axios from 'axios'
 
-import { Ingredient, Product } from '@prisma/client'
+import { Ingredient, Product, Category, ProductVariant } from '@prisma/client'
+
+export type ProductGet = Product & {
+  productVariant: ProductVariant[]
+}
+
+export type CategoryGet = Category & {
+  products: ProductGet[]
+}
 
 const pizzaInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL
@@ -16,4 +24,9 @@ const getAllIngredients = async () => {
   return data
 }
 
-export { productsSearch, getAllIngredients }
+const getAllCategories = async () => {
+  const {data} = await pizzaInstance.get<CategoryGet[]>('/categories')
+  return data
+}
+
+export { productsSearch, getAllIngredients, getAllCategories }
