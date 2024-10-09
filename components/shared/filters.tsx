@@ -17,7 +17,7 @@ type PriceRange = {
 }
 
 const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading, selectedIds, toggle } = useFilterIngredients()
+  const { ingredientsData, isLoading, selectedIds, toggle } = useFilterIngredients()
   const [price, setPrice] = useState<PriceRange>({ priceFrom: 0, priceTo: 1500 })
 
   const handlerPrice = (priceFrom: number, priceTo: number) => {
@@ -74,9 +74,9 @@ const Filters: React.FC<Props> = ({ className }) => {
         title="Ингредиенты"
         className="mt-5"
         limit={6}
-        loading={loading}
-        defaultItems={ingredients.slice(0, 6)}
-        items={ingredients}
+        loading={isLoading}
+        defaultItems={ingredientsData.slice(0, 6)}
+        items={ingredientsData}
         onClickCheckbox={toggle}
         selectedIds={selectedIds}
       />

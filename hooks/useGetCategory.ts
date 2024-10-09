@@ -1,27 +1,37 @@
-import { Product, Category } from '@prisma/client'
 import { useEffect, useState } from 'react'
 
 import { getAllCategories, CategoryGet } from '@/services/pizza-service'
+import useCategoryStore from '@/store/category'
 
 interface ReturnProps {
   categories: CategoryGet[]
   isLoading: boolean
 }
 
-const useGetCategory = (): ReturnProps => {
-  const [categories, setCategories] = useState<CategoryGet[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+const useGetCategory = () => {
+  const { categoryData, setCategoryData } = useCategoryStore()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    getAllCategories().then((data) => {
-      setCategories(data)
-      setIsLoading(false)
-    }).catch(e => {
-      console.log(e)
-    })
-  }, [])
+    const fetchCategories = async () => {
+      if (categoryData.length === 0 && !isLoading) {
+        setIsLoading(true)
+        try {
+          const data = await getAllCategories();
+          setCategoryData(data)
+        } catch (error) {
+          console.error("Ошибка при загрузке категорий:", error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+    };
 
-  return { categories, isLoading }
-}
+    fetchCategories()
+  }, [categoryData, setCategoryData, isLoading])
+
+  return { categories: categoryData, isLoading }
+};
 
 export default useGetCategory

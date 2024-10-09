@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef, FC } from 'react'
 import { useIntersection } from 'react-use'
 
 import { Title, ProductCard } from './index'
@@ -16,7 +16,7 @@ interface Props {
   categoryId: number
 }
 
-const ProductsGroupList: React.FC<Props> = ({ title, products, className, listClassName, categoryId }) => {
+const ProductsGroupList: FC<Props> = ({ title, products, className, listClassName, categoryId }) => {
   const setActiveCategotyId = useCategoryStore((state) => state.setActiveId)
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {

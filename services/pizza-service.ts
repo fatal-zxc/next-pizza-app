@@ -29,4 +29,14 @@ const getAllCategories = async () => {
   return data
 }
 
-export { productsSearch, getAllIngredients, getAllCategories }
+const getAllProducts = async () => {
+  const {data} = await pizzaInstance.get<Product[]>('/products')
+  return data
+}
+
+const getProductById = async (id: number) => {
+  const {data} = await pizzaInstance.get(`/products/${id}`)
+  return data
+}
+
+export { productsSearch, getAllIngredients, getAllCategories, getAllProducts, getProductById }

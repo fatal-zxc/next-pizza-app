@@ -5,7 +5,6 @@ import useGetCategory from "@/hooks/useGetCategory"
 
 export default function Home() {
   const {categories, isLoading} = useGetCategory()
-  console.log(categories)
   
   return (
   <main className="mt-10">

@@ -3,32 +3,44 @@ import { useEffect, useState } from "react"
 import { useSet } from "react-use"
 
 import { getAllIngredients } from "@/services/pizza-service"
-
-type IngredientItem = Pick<Ingredient, 'id' | 'name'>
+import useIngedientsStore from "@/store/ingredients"
 
 interface ReturnProps {
-  ingredients: IngredientItem[],
-  loading: boolean,
+  ingredientsData: Ingredient[],
+  isLoading: boolean,
   selectedIds: Set<number>
   toggle: (id: number) => void
 }
 
 const useFilterIngredients = (): ReturnProps => {
-  const [ingredients, setIngredients] = useState<IngredientItem[]>([])
-  const [loading, setLoading] = useState(true)
+  const { selectedIds: selectedIdsData, ingredientsData, setSelectedIds, setIngredientsData } = useIngedientsStore()
 
-  const [selectedIds, { toggle }] = useSet(new Set<number>([]))
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedIds, { toggle }] = useSet(selectedIdsData)
 
   useEffect(() => {
-    getAllIngredients().then((data) => {
-      setIngredients(data.map((ingredient) => ({ id: ingredient.id, name: ingredient.name})))
-      setLoading(false)
-    }).catch((e) => {
-      console.log(e)
-    })
-  }, [])
+    const fetchIngredients = async () => {
+      if (ingredientsData.length === 0 && !isLoading) {
+        setIsLoading(true)
+        try {
+          const data = await getAllIngredients()
+          setIngredientsData(data)
+        } catch (error) {
+          console.error("Ошибка при загрузке ингредиентов:", error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+    }
 
-  return {ingredients, loading, selectedIds, toggle}
+    fetchIngredients()
+  }, [ingredientsData, setIngredientsData, isLoading])
+
+  useEffect(() => {
+    setSelectedIds(selectedIds)
+  }, [selectedIds, setSelectedIds])
+
+  return {ingredientsData, isLoading, selectedIds, toggle}
 }
 
 export { useFilterIngredients }
