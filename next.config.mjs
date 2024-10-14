@@ -7,6 +7,12 @@ const nextConfig = {
         hostname: 'media.dodostatic.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.dodostatic.net',
+        port: '',
+        pathname: '/**',
       }
     ]
   }

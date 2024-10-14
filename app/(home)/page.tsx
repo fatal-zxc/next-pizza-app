@@ -1,6 +1,5 @@
 'use client'
 import { Title, TopBar, Filters, ProductsGroupList } from "@/components/shared"
-
 import useGetCategory from "@/hooks/useGetCategory"
 
 export default function Home() {

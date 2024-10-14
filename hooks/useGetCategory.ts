@@ -8,7 +8,7 @@ interface ReturnProps {
   isLoading: boolean
 }
 
-const useGetCategory = () => {
+const useGetCategory = (): ReturnProps => {
   const { categoryData, setCategoryData } = useCategoryStore()
 
   const [isLoading, setIsLoading] = useState(false)
