@@ -1,10 +1,11 @@
-import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { Title } from './title'
-import { Button } from '../ui'
 import { Plus } from 'lucide-react'
+
+import { cn } from '@/lib/utils'
+import { Title } from './index'
+import { Button } from '../ui'
 
 interface Props {
   id: number

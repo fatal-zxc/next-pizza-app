@@ -13,6 +13,9 @@ import ProductImage from './product-image'
 import VariantsSlider from './variants-slider'
 import PizzaModel from './pizza-model'
 import ProductModel from './product-model'
+import CartButton from './cart-button'
+import CartDrawer from './cart-drawer'
+import CartDrawerItem from './cart-drawer-item'
 
 export {
   Header,
@@ -30,4 +33,7 @@ export {
   VariantsSlider,
   PizzaModel,
   ProductModel,
+  CartButton,
+  CartDrawer,
+  CartDrawerItem,
 }
