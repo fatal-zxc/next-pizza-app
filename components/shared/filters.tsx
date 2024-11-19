@@ -1,28 +1,39 @@
 'use client'
 
-import { cn } from '@/lib/utils'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
+import { debounce } from 'lodash'
 
+import { cn } from '@/lib/utils'
 import { Title, CheckboxFiltersGroup } from './index'
 import { Input, RangeSlider } from '../ui'
 import { useFilterIngredients } from '@/hooks/useFilterIngredients'
+import useFiltersStore from '@/store/filters'
 
 interface Props {
   className?: string
 }
 
-type PriceRange = {
-  priceFrom: number
-  priceTo: number
-}
-
 const Filters: React.FC<Props> = ({ className }) => {
   const { ingredientsData, isLoading, selectedIds, toggle } = useFilterIngredients()
-  const [price, setPrice] = useState<PriceRange>({ priceFrom: 0, priceTo: 1500 })
+  const { priceFrom, priceTo, setPrice } = useFiltersStore()
+
+  const [localPriceFrom, setLocalPriceFrom] = useState(0)
+  const [localPriceTo, setLocalPriceTo] = useState(1500)
 
   const handlerPrice = (priceFrom: number, priceTo: number) => {
-    setPrice({ priceFrom, priceTo })
+    setLocalPriceFrom(priceFrom)
+    setLocalPriceTo(priceTo)
+    debouncedStorePrice(priceFrom, priceTo)
   }
+
+  const debouncedStorePrice = useMemo(
+    () =>
+      debounce((priceFrom, priceTo) => {
+        console.log(priceFrom, priceTo)
+        setPrice(priceFrom, priceTo)
+      }, 200),
+    [setPrice]
+  )
 
   return (
     <div className={cn('w-[245px]', className)}>
@@ -39,16 +50,16 @@ const Filters: React.FC<Props> = ({ className }) => {
             min={0}
             max={1500}
             step={10}
-            value={price.priceFrom}
-            onChange={(e) => handlerPrice(Number(e.target.value), price.priceTo)}
+            value={localPriceFrom}
+            onChange={(e) => handlerPrice(Number(e.target.value), priceTo)}
           />
           <Input
             type="number"
             min={200}
             max={1500}
             step={10}
-            value={price.priceTo}
-            onChange={(e) => handlerPrice(price.priceFrom, Number(e.target.value))}
+            value={localPriceTo}
+            onChange={(e) => handlerPrice(priceFrom, Number(e.target.value))}
           />
         </div>
         <RangeSlider
@@ -56,7 +67,7 @@ const Filters: React.FC<Props> = ({ className }) => {
           max={1500}
           minStepsBetweenThumbs={20}
           step={10}
-          value={[price.priceFrom, price.priceTo]}
+          value={[localPriceFrom, localPriceTo]}
           onValueChange={([from, to]) => to >= 200 && handlerPrice(from, to)}
         />
       </div>

@@ -16,15 +16,24 @@ export default function ProductModalPage({ params: { id } }: { params: { id: str
     return notFound()
   }
 
+  const notify = async () => {
+    const { toast } = await import('react-hot-toast')
+    toast.success('Товар добавлен в корзину!')
+    router.back()
+  }
+
   const main =
     product &&
     (product.categoryId === 2 ? (
       <PizzaModel
         pizza={product}
-        router={router}
+        notify={notify}
       />
     ) : (
-      <ProductModel product={product} />
+      <ProductModel
+        product={product}
+        notify={notify}
+      />
     ))
 
   return (

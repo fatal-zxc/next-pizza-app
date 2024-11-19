@@ -11,10 +11,10 @@ import useCartStore from '@/store/cart'
 interface Props {
   className?: string
   product: IProduct
-  onClickAdd?: VoidFunction
+  notify: () => void
 }
 
-const ProductModel: React.FC<Props> = ({ className, product }) => {
+const ProductModel: React.FC<Props> = ({ className, product, notify }) => {
   const { createItem, isLoading } = useCreateCartItem()
   const { cart, cartItemsMap } = useCartStore()
   const { changeQuantity, isLoading: isLoadingQuantity } = useChangeQuantityCartItem()
@@ -22,6 +22,7 @@ const ProductModel: React.FC<Props> = ({ className, product }) => {
 
   const handleCreateItem: MouseEventHandler<HTMLButtonElement> = () => {
     cart && createItem(product.productVariant[0].id, cart.id, product.id)
+    notify()
   }
 
   const handleChangeQuantityItem = (type: 'plus' | 'minus') => {

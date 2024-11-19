@@ -15,11 +15,10 @@ import { useCreateCartItem } from '@/hooks/index'
 interface Props {
   className?: string
   pizza: IProduct
-  router: AppRouterInstance
-  onClickAdd?: VoidFunction
+  notify: () => void
 }
 
-const PizzaModel: React.FC<Props> = ({ className, pizza, router }) => {
+const PizzaModel: React.FC<Props> = ({ className, pizza, notify }) => {
   const { createItem, isLoading } = useCreateCartItem()
   const { cart, cartItemsMap } = useCartStore()
 
@@ -54,7 +53,7 @@ const PizzaModel: React.FC<Props> = ({ className, pizza, router }) => {
 
   const handleCreateItem: MouseEventHandler<HTMLButtonElement> = () => {
     cart && createItem(pizza.productVariant[variant].id, cart.id, pizza.id, [...activeIngredients], ingredientsPrice)
-    router.back()
+    notify()
   }
 
   return (

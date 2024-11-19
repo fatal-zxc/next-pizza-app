@@ -31,9 +31,14 @@ const CartDrawer: React.FC<Props> = ({ children, cart }) => {
                 name={cartItem.productItem.product.name}
                 imageUrl={cartItem.productItem.product.imageUrl}
                 details={cartItem.ingredients
-                  .reduce((details, ingredient) => {
-                    return (details += ingredient.name + ', ')
-                  }, '')
+                  .reduce(
+                    (details, ingredient) => {
+                      return (details += ingredient.name + ', ')
+                    },
+                    cartItem.productItem.product.categoryId === 2
+                      ? `${cartItem.productItem.type === 'THIN' ? 'Тонкая' : 'Традиционная'} ${cartItem.productItem.size}см, `
+                      : ''
+                  )
                   .slice(0, -2)}
                 quantity={cartItem.quantity}
                 price={

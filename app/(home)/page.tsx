@@ -19,16 +19,19 @@ export default function Home() {
         <div className="flex-1">
           <div className="flex flex-col gap-16">
             {!isLoading &&
-              categories.map((category) => (
-                <ProductsGroupList
-                  key={category.id}
-                  categoryId={category.id}
-                  title={category.name}
-                  products={category.products}
-                  cartId={cart?.id}
-                  cartItemsMap={cartItemsMap}
-                />
-              ))}
+              categories.map((category) => {
+                if (category.products.length === 0) return
+                return (
+                  <ProductsGroupList
+                    key={category.id}
+                    categoryId={category.id}
+                    title={category.name}
+                    products={category.products}
+                    cartId={cart?.id}
+                    cartItemsMap={cartItemsMap}
+                  />
+                )
+              })}
           </div>
         </div>
       </div>

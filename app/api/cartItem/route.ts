@@ -2,24 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import prisma from '@/prisma/prisma-client'
 
-export async function GET(req: NextRequest) {
-  const body = await req.json()
-
-  const { cartItemId } = body
-
-  if (!cartItemId) {
-    return NextResponse.json({ message: 'отправьте id товара в корзине' }, { status: 400 })
-  }
-
-  const cartItem = await prisma.cartItem.findFirst({ where: { id: cartItemId } })
-
-  if (!cartItem) {
-    return NextResponse.json({ message: 'товар в корзине не найден' }, { status: 404 })
-  }
-
-  return cartItem
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()

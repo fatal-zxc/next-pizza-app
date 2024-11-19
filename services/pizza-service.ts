@@ -24,8 +24,8 @@ const getAllIngredients = async () => {
   return data
 }
 
-const getAllCategories = async () => {
-  const { data } = await pizzaInstance.get<CategoryGet[]>('/categories')
+const getAllCategories = async (priceFrom?: number, priceTo?: number) => {
+  const { data } = await pizzaInstance.get<CategoryGet[]>('/categories', { params: { priceFrom, priceTo } })
   return data
 }
 
