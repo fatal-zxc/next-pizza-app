@@ -9,10 +9,10 @@ export async function GET(req: NextRequest) {
     where: {
       OR: [
         { name: { contains: searchText, mode: 'insensitive' } },
-        { name: { contains: searchTextCapitalize, mode: 'insensitive' } }
-      ]
+        { name: { contains: searchTextCapitalize, mode: 'insensitive' } },
+      ],
     },
-    take: 5
+    take: 5,
   })
   return NextResponse.json(products)
 }

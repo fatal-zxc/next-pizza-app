@@ -1,21 +1,54 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import { Plus } from 'lucide-react'
+import React, { MouseEventHandler } from 'react'
+import { Plus, Loader } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { Title } from './index'
+import { Title, CountButton } from './index'
 import { Button } from '../ui'
+import useCreateCartItem from '@/hooks/useCreateCartItem'
+import useChangeQuantityCartItem from '@/hooks/useChangeQuantityCartItem'
 
 interface Props {
   id: number
   name: string
+  categoryId: number
   price: number
   imageUrl: string
+  quantity: number
+  productVariantId: number
+  cartId?: number
   className?: string
 }
 
-const ProductCard: React.FC<Props> = ({ id, name, price, imageUrl, className }) => {
+const ProductCard: React.FC<Props> = ({
+  id,
+  name,
+  categoryId,
+  price,
+  imageUrl,
+  className,
+  quantity,
+  productVariantId,
+  cartId,
+}) => {
+  const { createItem, isLoading } = useCreateCartItem()
+  const { changeQuantity, isLoading: isLoadingQuantity } = useChangeQuantityCartItem()
+
+  const handleCreateItem: MouseEventHandler<HTMLButtonElement> = (e) => {
+    if (categoryId === 2) return
+    e.preventDefault()
+    cartId && createItem(productVariantId, cartId, id)
+  }
+
+  const handleChangeQuantityItem = (type: 'plus' | 'minus') => {
+    if (!cartId) return
+    type === 'plus'
+      ? changeQuantity(quantity, quantity + 1, cartId, id, productVariantId)
+      : changeQuantity(quantity, quantity - 1, cartId, id, productVariantId)
+  }
+
   return (
     <div className={cn('', className)}>
       <Link href={`/product/${id}`}>
@@ -39,16 +72,33 @@ const ProductCard: React.FC<Props> = ({ id, name, price, imageUrl, className }) 
           <span className="text-[20px]">
             от <b>{price} ₽</b>
           </span>
-          <Button
-            variant="secondary"
-            className="text-base font-bold"
-          >
-            <Plus
-              size={20}
-              className="mr-1"
+          {!quantity || categoryId === 2 ? (
+            <Button
+              variant={isLoading ? 'ghost' : 'secondary'}
+              className="text-base font-bold"
+              onClick={handleCreateItem}
+            >
+              {isLoading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <>
+                  <Plus
+                    size={20}
+                    className="mr-1"
+                  />
+                  Добавить
+                </>
+              )}
+            </Button>
+          ) : (
+            <CountButton
+              value={quantity}
+              size="sm"
+              onClick={handleChangeQuantityItem}
+              isLoading={isLoadingQuantity}
+              isPreventDefault={true}
             />
-            Добавить
-          </Button>
+          )}
         </div>
       </Link>
     </div>

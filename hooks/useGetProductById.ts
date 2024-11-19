@@ -11,8 +11,8 @@ interface ReturnProps {
 
 const useGetProductById = (id: number): ReturnProps => {
   const { productsData } = useProductsStore()
-  const [ isLoading, setIsLoading ] = useState(false)
-  const [ isError, setIsError ] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -33,7 +33,7 @@ const useGetProductById = (id: number): ReturnProps => {
     fetchAllProducts()
   }, [id, isLoading, productsData, isError])
 
-  return {product: productsData.get(id), isLoading, isError}
+  return { product: productsData.get(id), isLoading, isError }
 }
 
 export default useGetProductById

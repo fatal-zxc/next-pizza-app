@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils'
 import React, { useState } from 'react'
 
-import { Title, FilterCheckbox, CheckboxFiltersGroup } from './index'
+import { Title, CheckboxFiltersGroup } from './index'
 import { Input, RangeSlider } from '../ui'
 import { useFilterIngredients } from '@/hooks/useFilterIngredients'
 
@@ -31,16 +31,6 @@ const Filters: React.FC<Props> = ({ className }) => {
         size="sm"
         className="font-bold"
       />
-      {/* <div className="flex flex-col gap-4">
-        <FilterCheckbox
-          name="Можно собирать"
-          id={-1}
-        />
-        <FilterCheckbox
-          name="Новинки"
-          id={-2}
-        />
-      </div> */}
       <div className="mt-3 border-y border-y-neutral-100 py-6 pb-7">
         <b className="mb-3">Цена от и до:</b>
         <div className="flex gap-3 mb-5">

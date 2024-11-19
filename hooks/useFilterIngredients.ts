@@ -1,13 +1,13 @@
-import { Ingredient } from "@prisma/client"
-import { useEffect, useState } from "react"
-import { useSet } from "react-use"
+import { Ingredient } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { useSet } from 'react-use'
 
-import { getAllIngredients } from "@/services/pizza-service"
-import useIngedientsStore from "@/store/ingredients"
+import { getAllIngredients } from '@/services/pizza-service'
+import useIngedientsStore from '@/store/ingredients'
 
 interface ReturnProps {
-  ingredientsData: Ingredient[],
-  isLoading: boolean,
+  ingredientsData: Ingredient[]
+  isLoading: boolean
   selectedIds: Set<number>
   toggle: (id: number) => void
 }
@@ -26,7 +26,7 @@ const useFilterIngredients = (): ReturnProps => {
           const data = await getAllIngredients()
           setIngredientsData(data)
         } catch (error) {
-          console.error("Ошибка при загрузке ингредиентов:", error)
+          console.error('Ошибка при загрузке ингредиентов:', error)
         } finally {
           setIsLoading(false)
         }
@@ -40,7 +40,7 @@ const useFilterIngredients = (): ReturnProps => {
     setSelectedIds(selectedIds)
   }, [selectedIds, setSelectedIds])
 
-  return {ingredientsData, isLoading, selectedIds, toggle}
+  return { ingredientsData, isLoading, selectedIds, toggle }
 }
 
 export { useFilterIngredients }

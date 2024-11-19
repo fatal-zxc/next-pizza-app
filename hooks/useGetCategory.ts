@@ -18,20 +18,20 @@ const useGetCategory = (): ReturnProps => {
       if (categoryData.length === 0 && !isLoading) {
         setIsLoading(true)
         try {
-          const data = await getAllCategories();
+          const data = await getAllCategories()
           setCategoryData(data)
         } catch (error) {
-          console.error("Ошибка при загрузке категорий:", error)
+          console.error('Ошибка при загрузке категорий:', error)
         } finally {
           setIsLoading(false)
         }
       }
-    };
+    }
 
     fetchCategories()
   }, [categoryData, setCategoryData, isLoading])
 
   return { categories: categoryData, isLoading }
-};
+}
 
 export default useGetCategory

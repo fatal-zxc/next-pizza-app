@@ -1,9 +1,12 @@
-import React from 'react'
+'use client'
+import React, { MouseEventHandler } from 'react'
 
 import { IProduct } from '@/store/products'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
-import { ProductImage, Title } from './index'
+import { CountButton, ProductImage, Title } from './index'
+import { useCreateCartItem, useChangeQuantityCartItem } from '@/hooks/index'
+import useCartStore from '@/store/cart'
 
 interface Props {
   className?: string
@@ -12,6 +15,22 @@ interface Props {
 }
 
 const ProductModel: React.FC<Props> = ({ className, product }) => {
+  const { createItem, isLoading } = useCreateCartItem()
+  const { cart, cartItemsMap } = useCartStore()
+  const { changeQuantity, isLoading: isLoadingQuantity } = useChangeQuantityCartItem()
+  const quantity = cartItemsMap.get(product.id) || 0
+
+  const handleCreateItem: MouseEventHandler<HTMLButtonElement> = () => {
+    cart && createItem(product.productVariant[0].id, cart.id, product.id)
+  }
+
+  const handleChangeQuantityItem = (type: 'plus' | 'minus') => {
+    if (!cart) return
+    type === 'plus'
+      ? changeQuantity(quantity, quantity + 1, cart.id, product.id, product.productVariant[0].id)
+      : changeQuantity(quantity, quantity - 1, cart.id, product.id, product.productVariant[0].id)
+  }
+
   return (
     <div className={cn('flex flex-1', className)}>
       <ProductImage
@@ -27,9 +46,23 @@ const ProductModel: React.FC<Props> = ({ className, product }) => {
           />
           <p className="text-gray-400">1 шт, 300 г</p>
         </div>
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mb-5">
-          Добавить в корзину за {product.productVariant[0].price} ₽
-        </Button>
+        {quantity ? (
+          <CountButton
+            value={quantity}
+            size="lg"
+            onClick={handleChangeQuantityItem}
+            isLoading={isLoadingQuantity}
+            isPreventDefault={true}
+          />
+        ) : (
+          <Button
+            disabled={isLoading}
+            className="h-[55px] px-10 text-base rounded-[18px] w-full mb-5"
+            onClick={handleCreateItem}
+          >
+            Добавить в корзину за {product.productVariant[0].price} ₽
+          </Button>
+        )}
       </div>
     </div>
   )

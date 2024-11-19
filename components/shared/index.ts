@@ -16,6 +16,7 @@ import ProductModel from './product-model'
 import CartButton from './cart-button'
 import CartDrawer from './cart-drawer'
 import CartDrawerItem from './cart-drawer-item'
+import CountButton from './count-button'
 
 export {
   Header,
@@ -36,4 +37,5 @@ export {
   CartButton,
   CartDrawer,
   CartDrawerItem,
+  CountButton,
 }

@@ -1,6 +1,6 @@
-import { create } from "zustand"
+import { create } from 'zustand'
 
-import { CategoryGet } from "@/services/pizza-service"
+import { CategoryGet } from '@/services/pizza-service'
 
 interface State {
   activeId: number
@@ -13,7 +13,7 @@ const useCategoryStore = create<State>()((set) => ({
   activeId: 1,
   categoryData: [],
   setActiveId: (activeId: number) => set({ activeId }),
-  setCategoryData: (categories: CategoryGet[]) => set({ categoryData: categories })
+  setCategoryData: (categories: CategoryGet[]) => set({ categoryData: categories }),
 }))
 
 export default useCategoryStore

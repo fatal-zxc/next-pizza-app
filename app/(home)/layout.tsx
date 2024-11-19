@@ -1,17 +1,17 @@
-import { Header } from '@/components/shared';
+import { Header } from '@/components/shared'
 
 export default function RootLayout({
   children,
-  modal
+  modal,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
   modal: React.ReactNode
 }>) {
   return (
     <>
-      <Header className='px-[5%]' />
+      <Header className="px-[5%]" />
       {children}
       {modal}
     </>
-  );
+  )
 }

@@ -1,4 +1,5 @@
 import { Minus, Plus } from 'lucide-react'
+import { MouseEvent } from 'react'
 
 import { CountButtonProps } from './count-button'
 import { Button } from '../ui/button'
@@ -8,7 +9,7 @@ interface IconButtonProps {
   size?: CountButtonProps['size']
   disabled?: boolean
   type?: 'plus' | 'minus'
-  onClick?: () => void
+  onClick?: (e: MouseEvent) => void
 }
 
 const CountIconButton: React.FC<IconButtonProps> = ({ size = 'sm', disabled, type, onClick }) => {

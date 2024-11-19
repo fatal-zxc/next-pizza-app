@@ -10,7 +10,7 @@
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",
-    "format": "prettier --write components/**/*.{js,jsx,ts,tsx}"
+    "format": "prettier --write {components,app,hooks,services,store}/**/*.{js,jsx,ts,tsx}"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

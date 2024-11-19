@@ -74,7 +74,7 @@ model Ingredient {
   price     Int
   imageUrl  String
   products  Product[]
-  cartItems CartItem[]
+  cartItems CartItem[] @relation("CartItemIngredients")
 }
 
 model Cart {
@@ -93,7 +93,8 @@ model CartItem {
   cart          Cart           @relation(fields: [cartId], references: [id])
   cartId        Int
   quantity      Int
-  ingredients   Ingredient[]
+  ingredients   Ingredient[]   @relation("CartItemIngredients")
+  createdAt     DateTime       @default(now())
 }
 
 model Order {

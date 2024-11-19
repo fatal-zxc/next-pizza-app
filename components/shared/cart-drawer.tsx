@@ -1,94 +1,54 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui'
 import { CartDrawerItem } from './index'
+import { ICart } from '@/store/cart'
 
 interface Props {
   children: React.ReactNode
+  cart?: ICart
 }
 
-const CartDrawer: React.FC<Props> = ({ children }) => {
+const CartDrawer: React.FC<Props> = ({ children, cart }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#f4f1ee]">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold">3 товара</span>
+            В корзине <span className="font-bold">{cart && cart.items ? cart.items.length : 0} товара</span>
           </SheetTitle>
         </SheetHeader>
         <div className="-mx-6 mt-5 overflow-auto scrollbar flex-1">
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
-          <CartDrawerItem
-            className="mb-2"
-            CartItem={{
-              id: 1,
-              imageUrl: 'https://media.dodostatic.net/image/r:760x760/11EE7970259D888E98B6407EE6B994D9.avif',
-              details: 'большая 25см 3кг',
-              price: 390,
-              quantity: 1,
-              name: 'додстер',
-            }}
-          />
+          {cart &&
+            cart.items.map((cartItem) => (
+              <CartDrawerItem
+                className="mb-2"
+                key={cartItem.id}
+                name={cartItem.productItem.product.name}
+                imageUrl={cartItem.productItem.product.imageUrl}
+                details={cartItem.ingredients
+                  .reduce((details, ingredient) => {
+                    return (details += ingredient.name + ', ')
+                  }, '')
+                  .slice(0, -2)}
+                quantity={cartItem.quantity}
+                price={
+                  cartItem.productItem.price +
+                  cartItem.ingredients.reduce((acc, ingredient) => {
+                    return (acc += ingredient.price)
+                  }, 0)
+                }
+                cartItemId={cartItem.id}
+                cartId={cart.id}
+                productId={cartItem.productItem.product.id}
+                productVariantId={cartItem.productItem.id}
+                isPizza={cartItem.productItem.product.categoryId === 2}
+              />
+            ))}
         </div>
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">
@@ -97,7 +57,7 @@ const CartDrawer: React.FC<Props> = ({ children }) => {
                 Итого
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
-              <span className="font-bold text-lg">520 ₽</span>
+              <span className="font-bold text-lg">{cart ? cart.totalAmount : 0} ₽</span>
             </div>
             <Link href="/cart">
               <Button

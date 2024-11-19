@@ -14,9 +14,19 @@ interface Props {
   className?: string
   listClassName?: string
   categoryId: number
+  cartId?: number
+  cartItemsMap?: Map<number, number>
 }
 
-const ProductsGroupList: FC<Props> = ({ title, products, className, listClassName, categoryId }) => {
+const ProductsGroupList: FC<Props> = ({
+  title,
+  products,
+  className,
+  listClassName,
+  categoryId,
+  cartId,
+  cartItemsMap,
+}) => {
   const setActiveCategotyId = useCategoryStore((state) => state.setActiveId)
   const intersectionRef = useRef(null)
   const intersection = useIntersection(intersectionRef, {
@@ -41,13 +51,17 @@ const ProductsGroupList: FC<Props> = ({ title, products, className, listClassNam
         className="font-extrabold mb-5"
       />
       <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
-        {products.map((product, i) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}
             name={product.name}
+            categoryId={categoryId}
             imageUrl={product.imageUrl}
             price={product.productVariant[0].price}
+            productVariantId={product.productVariant[0].id}
+            quantity={(cartItemsMap && cartItemsMap.get(product.id)) || 0}
+            cartId={cartId}
           />
         ))}
       </div>

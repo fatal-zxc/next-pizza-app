@@ -1,33 +1,39 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { IProduct } from '@/store/products'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
 import { VariantsSlider, ProductImage, Title } from './index'
+import useCartStore from '@/store/cart'
+import { useCreateCartItem } from '@/hooks/index'
 
 interface Props {
   className?: string
   pizza: IProduct
+  router: AppRouterInstance
   onClickAdd?: VoidFunction
 }
 
-const PizzaModel: React.FC<Props> = ({ className, pizza }) => {
+const PizzaModel: React.FC<Props> = ({ className, pizza, router }) => {
+  const { createItem, isLoading } = useCreateCartItem()
+  const { cart, cartItemsMap } = useCartStore()
+
   const [size, setSize] = useState<number>(25)
   const [type, setType] = useState<string>('TRADITIONAL')
   const [ingredientsPrice, setIngredientsPrice] = useState<number>(0)
   const [price, setPrice] = useState<number>(pizza.productVariant[0].price)
   const [activeIngredients] = useState(new Set<number>())
 
+  const variant = (type === 'TRADITIONAL' ? 0 : 3) + size / 5 - 5 - (type === 'THIN' ? 1 : 0)
+
   useEffect(() => {
-    setPrice(
-      pizza.productVariant[(type === 'TRADITIONAL' ? 0 : 3) + size / 5 - 5 - (type === 'THIN' ? 1 : 0)].price +
-        ingredientsPrice
-    )
-  }, [size, type, pizza.productVariant, ingredientsPrice])
+    setPrice(pizza.productVariant[variant].price + ingredientsPrice)
+  }, [pizza.productVariant, ingredientsPrice, variant])
 
   const handleSize = (size: string) => {
     if (size === '25') {
@@ -44,6 +50,11 @@ const PizzaModel: React.FC<Props> = ({ className, pizza }) => {
       activeIngredients.add(id)
       setIngredientsPrice((prevPrice) => prevPrice + price)
     }
+  }
+
+  const handleCreateItem: MouseEventHandler<HTMLButtonElement> = () => {
+    cart && createItem(pizza.productVariant[variant].id, cart.id, pizza.id, [...activeIngredients], ingredientsPrice)
+    router.back()
   }
 
   return (
@@ -108,7 +119,13 @@ const PizzaModel: React.FC<Props> = ({ className, pizza }) => {
             ))}
           </div>
         </div>
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-5">Добавить в корзину за {price} ₽</Button>
+        <Button
+          disabled={isLoading}
+          onClick={handleCreateItem}
+          className="h-[55px] px-10 text-base rounded-[18px] w-full mt-5"
+        >
+          Добавить в корзину за {price} ₽
+        </Button>
       </div>
     </div>
   )

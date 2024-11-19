@@ -7,10 +7,10 @@ export async function GET() {
     include: {
       products: {
         include: {
-          productVariant: true
-        }
+          productVariant: true,
+        },
       },
-    }
+    },
   })
   return NextResponse.json(categories)
 }

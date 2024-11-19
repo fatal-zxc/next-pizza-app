@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import useGetProductById from '@/hooks/useGetProductById'
 import { PizzaModel, ProductModel } from '@/components/shared'
 import { Dialog } from '@/components/ui'
-import { DialogContent } from '@/components/ui/dialog'
+import { DialogContent, DialogTitle } from '@/components/ui/dialog'
 
 export default function ProductModalPage({ params: { id } }: { params: { id: string } }) {
   const router = useRouter()
@@ -16,11 +16,27 @@ export default function ProductModalPage({ params: { id } }: { params: { id: str
     return notFound()
   }
 
-  const main = product && (product.categoryId === 2 ? <PizzaModel pizza={product}/> : <ProductModel product={product} />)
+  const main =
+    product &&
+    (product.categoryId === 2 ? (
+      <PizzaModel
+        pizza={product}
+        router={router}
+      />
+    ) : (
+      <ProductModel product={product} />
+    ))
 
   return (
-    <Dialog open onOpenChange={router.back} >
-      <DialogContent className='p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden'>
+    <Dialog
+      open
+      onOpenChange={router.back}
+    >
+      <DialogContent
+        aria-describedby={`content for product: ${id}`}
+        className="p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden"
+      >
+        <DialogTitle hidden />
         {main}
       </DialogContent>
     </Dialog>
