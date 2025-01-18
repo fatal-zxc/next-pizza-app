@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 import prisma from '@/prisma/prisma-client'
 
 export async function GET(req: NextRequest) {
   try {
     const userId = 1
-    const tokenId = req.cookies.get('cartToken')?.value
+    const tokenId = cookies().get('cartToken')?.value
 
     // if (!tokenId) {
     //   return NextResponse.json({ cart: [] })
@@ -23,6 +24,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(userCart)
   } catch (e) {
-    console.log(e)
+    return NextResponse.json(
+      { message: 'Ошибка при поиске корзины', error: (e as Error).message },
+      { status: 500 }
+    )
   }
 }
